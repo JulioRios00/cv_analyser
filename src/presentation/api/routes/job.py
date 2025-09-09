@@ -2,11 +2,12 @@
 API routes for job analysis.
 """
 
-import uuid
 import logging
-from fastapi import APIRouter, HTTPException, Depends
+import uuid
 
-from ....infrastructure.ai import create_ai_service, AIServiceError
+from fastapi import APIRouter, Depends, HTTPException
+
+from ....infrastructure.ai import AIServiceError, create_ai_service
 from ...schemas import JobAnalysisRequest, JobAnalysisResponse
 
 logger = logging.getLogger(__name__)

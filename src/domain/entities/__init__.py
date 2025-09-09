@@ -6,8 +6,8 @@ external frameworks.
 
 from dataclasses import dataclass
 from datetime import datetime
-from typing import List, Optional
 from enum import Enum
+from typing import List, Optional
 
 
 class MatchStatus(Enum):
@@ -154,7 +154,9 @@ class Job:
     def all_required_skill_names(self) -> List[str]:
         """Get all required skill names."""
         return (
-            [req.skill for req in self.required_skills] if self.required_skills else []
+            [req.skill for req in self.required_skills]
+            if self.required_skills
+            else []
         )
 
     @property
@@ -234,7 +236,9 @@ class Match:
     @property
     def is_completed(self) -> bool:
         """Check if matching is completed successfully."""
-        return self.status == MatchStatus.COMPLETED and self.analysis is not None
+        return (
+            self.status == MatchStatus.COMPLETED and self.analysis is not None
+        )
 
     @property
     def recommendation_level(self) -> str:

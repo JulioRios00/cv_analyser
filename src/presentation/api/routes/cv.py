@@ -2,15 +2,15 @@
 API routes for CV management.
 """
 
+import logging
 import os
 import uuid
-import logging
-from typing import List
-from fastapi import APIRouter, UploadFile, File, HTTPException, Depends
 
-from ....infrastructure.pdf import PDFProcessor, PDFProcessingError
-from ....infrastructure.ai import create_ai_service, AIServiceError
+from fastapi import APIRouter, Depends, File, HTTPException, UploadFile
+
 from ....config import settings
+from ....infrastructure.ai import AIServiceError, create_ai_service
+from ....infrastructure.pdf import PDFProcessingError, PDFProcessor
 from ...schemas import CVUploadResponse
 
 logger = logging.getLogger(__name__)
@@ -44,7 +44,9 @@ async def upload_cv(
     try:
         # Validate file type
         if not file.filename or not file.filename.lower().endswith(".pdf"):
-            raise HTTPException(status_code=400, detail="Only PDF files are supported")
+            raise HTTPException(
+                status_code=400, detail="Only PDF files are supported"
+            )
 
         # Read file content
         file_content = await file.read()
@@ -53,7 +55,10 @@ async def upload_cv(
         if len(file_content) > settings.max_file_size_bytes:
             raise HTTPException(
                 status_code=413,
-                detail=f"File too large. Maximum size: {settings.max_file_size_mb}MB",
+                detail=(
+                    f"File too large. Maximum size: "
+                    f"{settings.max_file_size_mb}MB"
+                ),
             )
 
         # Validate PDF
@@ -77,7 +82,9 @@ async def upload_cv(
         if not os.path.exists(settings.upload_dir):
             os.makedirs(settings.upload_dir)
 
-        file_path = os.path.join(settings.upload_dir, f"{cv.id}_{file.filename}")
+        file_path = os.path.join(
+            settings.upload_dir, f"{cv.id}_{file.filename}"
+        )
         with open(file_path, "wb") as f:
             f.write(file_content)
 
@@ -90,7 +97,9 @@ async def upload_cv(
             extracted_data={
                 "name": cv.name,
                 "email": cv.email,
-                "skills": [{"name": s.name, "level": s.level.value} for s in cv.skills],
+                "skills": [
+                    {"name": s.name, "level": s.level.value} for s in cv.skills
+                ],
                 "experience_years": cv.total_experience_years,
                 "education": [
                     {"degree": e.degree, "institution": e.institution}

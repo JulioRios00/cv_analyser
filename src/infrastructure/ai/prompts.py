@@ -14,13 +14,13 @@ CV Text:
 Please extract and return ONLY a JSON object with this structure:
 {{
     "name": "Full name",
-    "email": "email@example.com", 
+    "email": "email@example.com",
     "phone": "phone number",
     "location": "city, country",
     "skills": [
         {{
             "name": "Python",
-            "level": "advanced", 
+            "level": "advanced",
             "years_experience": 3,
             "category": "programming"
         }}
@@ -28,7 +28,7 @@ Please extract and return ONLY a JSON object with this structure:
     "education": [
         {{
             "degree": "Bachelor of Science",
-            "institution": "University Name", 
+            "institution": "University Name",
             "field_of_study": "Computer Science",
             "graduation_year": 2020
         }}
@@ -78,7 +78,7 @@ Please extract and return ONLY a JSON object with this structure:
     "preferred_skills": [
         {{
             "skill": "Docker",
-            "required_level": "intermediate", 
+            "required_level": "intermediate",
             "is_mandatory": false,
             "weight": 0.5
         }}
@@ -100,13 +100,16 @@ Important:
 
 
 def create_matching_prompt(
-    cv_skills: list, cv_experience: float, job_skills: list, job_experience: int
+    cv_skills: list,
+    cv_experience: float,
+    job_skills: list,
+    job_experience: int,
 ) -> str:
     """Create prompt for CV-Job matching analysis."""
     return f"""
 Analyze how well this CV matches the job requirements.
 
-CV Summary: 
+CV Summary:
 - Skills: {cv_skills}
 - Experience: {cv_experience} years
 
@@ -125,7 +128,7 @@ Please analyze and return ONLY a JSON object with this structure:
             "skill_name": "Python",
             "cv_has_skill": true,
             "cv_skill_level": "advanced",
-            "required_level": "intermediate", 
+            "required_level": "intermediate",
             "match_score": 0.9,
             "gap_analysis": "CV skill level exceeds requirements"
         }}

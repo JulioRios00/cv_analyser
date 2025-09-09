@@ -4,7 +4,8 @@ These are abstractions that will be implemented by infrastructure layer.
 """
 
 from abc import ABC, abstractmethod
-from typing import Optional, List
+from typing import List, Optional
+
 from ..entities import CV, Job, Match
 
 
@@ -91,5 +92,7 @@ class MatchRepository(ABC):
 
     @abstractmethod
     async def delete(self, match_id: str) -> bool:
-        """Delete a match by ID. Returns True if deleted, False if not found."""
+        """
+        Delete a match by ID. Returns True if deleted, False if not found.
+        """
         pass

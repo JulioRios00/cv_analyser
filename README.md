@@ -68,7 +68,7 @@ The API will be available at:
 - `POST /api/v1/cv/upload` - Upload and analyze CV (PDF)
 - `GET /api/v1/cv/` - List uploaded CVs
 
-### Job Analysis  
+### Job Analysis
 - `POST /api/v1/job/analyze` - Analyze job description
 - `GET /api/v1/job/` - List analyzed jobs
 
@@ -175,6 +175,38 @@ curl http://localhost:8000/health
 5. **Export Features**: PDF reports, Excel exports
 6. **Dashboard**: Web interface for HR managers
 7. **Integration**: ATS systems, job boards
+
+## 🛠️ Development Setup
+
+### Pre-commit Hooks
+
+This project uses pre-commit hooks to ensure code quality:
+
+```bash
+# Install pre-commit (included in requirements.txt)
+pip install pre-commit
+
+# Install the git hooks
+pre-commit install
+
+# Run on all files manually
+pre-commit run --all-files
+```
+
+**What the hooks do:**
+- **Black**: Auto-formats Python code (79 char line length)
+- **isort**: Sorts and organizes imports
+- **flake8**: Lints code for style and errors
+- **General**: Trims whitespace, fixes file endings, checks YAML/JSON
+
+The hooks run automatically on `git commit` and only process changed files, keeping your commits clean and consistent!
+
+### Code Style
+
+- **Line Length**: 79 characters (configured in `pyproject.toml`)
+- **Formatter**: Black with isort for imports
+- **Linter**: flake8 with custom rules
+- **Architecture**: Clean Architecture principles
 
 ## 🤝 Contributing
 

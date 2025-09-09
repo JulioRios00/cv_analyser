@@ -3,8 +3,9 @@ Application configuration using Pydantic settings.
 This handles environment variables and application settings.
 """
 
-from pydantic_settings import BaseSettings
 from typing import List
+
+from pydantic_settings import BaseSettings
 
 
 class Settings(BaseSettings):

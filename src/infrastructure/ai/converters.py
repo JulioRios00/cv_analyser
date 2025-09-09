@@ -3,17 +3,17 @@ Data converters for AI service responses.
 Convert JSON responses to domain entities.
 """
 
-from typing import Dict, Any
 from datetime import datetime
+from typing import Any, Dict
 
 from ...domain.entities import (
     CV,
-    Job,
-    MatchAnalysis,
-    Skill,
     Education,
     Experience,
+    Job,
     JobRequirement,
+    MatchAnalysis,
+    Skill,
     SkillLevel,
     SkillMatch,
 )

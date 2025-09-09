@@ -5,31 +5,31 @@ This service provides AI-powered analysis for CV and job matching.
 
 import json
 import logging
+
 import google.generativeai as genai
 
-from ...domain.services import AIAnalysisService
+from ...config import settings
 from ...domain.entities import (
     CV,
-    Job,
-    MatchAnalysis,
-    Skill,
     Education,
     Experience,
+    Job,
     JobRequirement,
+    MatchAnalysis,
+    Skill,
     SkillLevel,
 )
-from ...config import settings
-from .prompts import (
-    create_cv_extraction_prompt,
-    create_job_analysis_prompt,
-    create_matching_prompt,
-)
+from ...domain.services import AIAnalysisService
 from .converters import (
     convert_to_cv_entity,
     convert_to_job_entity,
     convert_to_match_analysis,
 )
-
+from .prompts import (
+    create_cv_extraction_prompt,
+    create_job_analysis_prompt,
+    create_matching_prompt,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -124,7 +124,9 @@ class GeminiAIService(AIAnalysisService):
 
             cv_id_str = cv.id or "unknown"
             job_id_str = job.id or "unknown"
-            analysis = convert_to_match_analysis(match_data, cv_id_str, job_id_str)
+            analysis = convert_to_match_analysis(
+                match_data, cv_id_str, job_id_str
+            )
 
             logger.info("Successfully calculated match score using Gemini")
             return analysis
@@ -154,7 +156,9 @@ class GeminiAIService(AIAnalysisService):
                 skills=[
                     Skill(
                         name=skill.get("name", ""),
-                        level=SkillLevel(skill.get("level", "beginner").lower()),
+                        level=SkillLevel(
+                            skill.get("level", "beginner").lower()
+                        ),
                         years_experience=skill.get("years_experience"),
                         category=skill.get("category"),
                     )

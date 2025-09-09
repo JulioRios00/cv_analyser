@@ -6,10 +6,11 @@ This service extracts text content from uploaded PDF files.
 import io
 import logging
 from typing import Optional
+
 import pdfplumber
 import PyPDF2
-from ...domain.services import PDFProcessingService
 
+from ...domain.services import PDFProcessingService
 
 logger = logging.getLogger(__name__)
 
@@ -108,7 +109,9 @@ class PDFProcessor(PDFProcessingService):
             metadata = {
                 "pages": len(reader.pages),
                 "title": (
-                    getattr(reader.metadata, "title", None) if reader.metadata else None
+                    getattr(reader.metadata, "title", None)
+                    if reader.metadata
+                    else None
                 ),
                 "author": (
                     getattr(reader.metadata, "author", None)

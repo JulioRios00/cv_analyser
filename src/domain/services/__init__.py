@@ -5,6 +5,7 @@ These services orchestrate complex business operations.
 
 from abc import ABC, abstractmethod
 from typing import List
+
 from ..entities import CV, Job, MatchAnalysis
 
 
@@ -73,13 +74,17 @@ class MatchingService:
         if missing_mandatory:
             # Reduce overall score by 10% for each missing mandatory skill
             penalty = len(missing_mandatory) * 0.1
-            analysis.overall_score = max(0, analysis.overall_score - penalty * 100)
+            analysis.overall_score = max(
+                0, analysis.overall_score - penalty * 100
+            )
 
         # Rule 2: Boost score for relevant experience
         if cv.total_experience_years >= job.min_experience_years:
             exp_diff = cv.total_experience_years - job.min_experience_years
             boost = min(0.1, exp_diff * 0.02)
-            analysis.overall_score = min(100, analysis.overall_score + boost * 100)
+            analysis.overall_score = min(
+                100, analysis.overall_score + boost * 100
+            )
 
         # Rule 3: Add specific recommendations based on gaps
         analysis.recommendations.extend(
@@ -112,10 +117,14 @@ class MatchingService:
         if job.required_education and cv.education:
             cv_degrees = [edu.degree.lower() for edu in cv.education]
             missing_education = [
-                edu for edu in job.required_education if edu.lower() not in cv_degrees
+                edu
+                for edu in job.required_education
+                if edu.lower() not in cv_degrees
             ]
             if missing_education:
-                recommendations.append(f"Consider pursuing: {missing_education[0]}")
+                recommendations.append(
+                    f"Consider pursuing: {missing_education[0]}"
+                )
 
         return recommendations
 

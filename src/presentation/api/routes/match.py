@@ -2,13 +2,14 @@
 API routes for CV-Job matching.
 """
 
-import uuid
 import logging
-from fastapi import APIRouter, HTTPException
+import uuid
 from datetime import datetime
 
-from ...schemas import MatchRequest, MatchResponse
+from fastapi import APIRouter, HTTPException
+
 from ....infrastructure.ai import GeminiAIService
+from ...schemas import MatchRequest, MatchResponse
 
 logger = logging.getLogger(__name__)
 
@@ -41,7 +42,9 @@ async def match_cv_job(request: dict):
 
     except Exception as e:
         logger.error(f"Error in CV-Job matching: {str(e)}")
-        raise HTTPException(status_code=500, detail=f"Matching failed: {str(e)}")
+        raise HTTPException(
+            status_code=500, detail=f"Matching failed: {str(e)}"
+        )
 
 
 @match_router.post("/analyze", response_model=MatchResponse)
@@ -54,7 +57,9 @@ async def create_match_analysis(request: MatchRequest):
     # we would fetch the CV and Job from database,
     # then use the AI service to create the match analysis
 
-    logger.info(f"Match analysis requested: CV {request.cv_id} vs Job {request.job_id}")
+    logger.info(
+        f"Match analysis requested: CV {request.cv_id} vs Job {request.job_id}"
+    )
 
     return MatchResponse(
         id=str(uuid.uuid4()),

@@ -4,6 +4,7 @@ FastAPI application main module.
 
 import logging
 from datetime import datetime
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -58,7 +59,9 @@ async def root():
 
 app.include_router(cv_router, prefix="/api/v1/cv", tags=["CV Management"])
 app.include_router(job_router, prefix="/api/v1/job", tags=["Job Analysis"])
-app.include_router(match_router, prefix="/api/v1/match", tags=["CV-Job Matching"])
+app.include_router(
+    match_router, prefix="/api/v1/match", tags=["CV-Job Matching"]
+)
 
 
 if __name__ == "__main__":
