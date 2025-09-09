@@ -25,7 +25,6 @@ def convert_to_cv_entity(data: Dict[str, Any], raw_text: str) -> CV:
     for skill_data in data.get("skills", []):
         try:
             level_str = skill_data.get("level", "beginner").lower()
-            # Validate skill level
             valid_levels = ["beginner", "intermediate", "advanced", "expert"]
             if level_str not in valid_levels:
                 level_str = "beginner"
@@ -38,7 +37,6 @@ def convert_to_cv_entity(data: Dict[str, Any], raw_text: str) -> CV:
             )
             skills.append(skill)
         except (ValueError, TypeError):
-            # Skip invalid skills but continue processing
             continue
 
     education = []
@@ -95,7 +93,6 @@ def convert_to_job_entity(data: Dict[str, Any], description: str) -> Job:
             )
             required_skills.append(req)
         except (ValueError, TypeError):
-            # Skip invalid skill requirements
             continue
 
     preferred_skills = []
@@ -114,7 +111,6 @@ def convert_to_job_entity(data: Dict[str, Any], description: str) -> Job:
             )
             preferred_skills.append(req)
         except (ValueError, TypeError):
-            # Skip invalid skill requirements
             continue
 
     return Job(
@@ -142,7 +138,6 @@ def convert_to_match_analysis(
             cv_level = match_data.get("cv_skill_level")
             req_level = match_data.get("required_level")
 
-            # Validate skill levels
             valid_levels = ["beginner", "intermediate", "advanced", "expert"]
             cv_skill_level = None
             required_level = None
@@ -163,7 +158,6 @@ def convert_to_match_analysis(
             )
             skill_matches.append(skill_match)
         except (ValueError, TypeError):
-            # Skip invalid skill matches
             continue
 
     return MatchAnalysis(
